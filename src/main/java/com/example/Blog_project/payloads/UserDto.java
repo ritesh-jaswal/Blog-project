@@ -22,7 +22,7 @@ public class UserDto
     private String email;
 
     @NotEmpty(message = "Password Cannot be Empty")
-    @Pattern(regexp ="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=]).{8,}$")
+//    @Pattern(regexp ="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=]).{8,}$")
     private String password;
 
     @NotEmpty(message = "About Cannot be Empty")

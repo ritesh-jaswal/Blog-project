@@ -10,5 +10,5 @@ public interface UserService
     UserDto updateUser(UserDto userDto,Integer userId);
     UserDto getUserById(Integer userId);
     List<UserDto> getAllUsers();
-    Void deleteUserById(Integer userId);
+    void deleteUserById(Integer userId);
 }
