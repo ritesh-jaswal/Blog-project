@@ -5,6 +5,7 @@ import com.example.Blog_project.models.Category;
 import com.example.Blog_project.models.Post;
 import com.example.Blog_project.models.User;
 import com.example.Blog_project.payloads.PostDto;
+import com.example.Blog_project.payloads.PostResponse;
 import com.example.Blog_project.repositories.CategoryRepo;
 import com.example.Blog_project.repositories.PostRepo;
 import com.example.Blog_project.repositories.UserRepo;
@@ -70,7 +71,7 @@ public class PostServiceImpl implements PostService
     }
 
     @Override
-    public List<PostDto> getAllPosts(Integer pageNumber,Integer pageSize)
+    public PostResponse getAllPosts(Integer pageNumber, Integer pageSize)
     {
         Pageable pageable = PageRequest.of(pageNumber,pageSize);
 
@@ -78,8 +79,28 @@ public class PostServiceImpl implements PostService
         List<Post> posts = postPage.getContent();
 
         List<PostDto> postDtos = posts.stream().map(post -> this.modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
-        return postDtos;
+
+        PostResponse postResponse = new PostResponse();
+        postResponse.setContent(postDtos);
+        postResponse.setPageNumber(postPage.getNumber());
+        postResponse.setPageSize(postPage.getSize());
+        postResponse.setTotalElements(postPage.getNumberOfElements());
+        postResponse.setTotalPages(postPage.getTotalPages());
+        postResponse.setLastPage(postPage.isLast());
+        return postResponse;
     }
+
+//    @Override
+//    public List<PostDto> getAllPosts(Integer pageNumber,Integer pageSize)
+//    {
+//        Pageable pageable = PageRequest.of(pageNumber,pageSize);
+//
+//        Page<Post> postPage = this.postRepo.findAll(pageable);
+//        List<Post> posts = postPage.getContent();
+//
+//        List<PostDto> postDtos = posts.stream().map(post -> this.modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
+//        return postDtos;
+//    }
 
     @Override
     public void deletePostById(Integer postId)

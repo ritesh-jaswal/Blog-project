@@ -2,6 +2,7 @@ package com.example.Blog_project.controllers;
 
 import com.example.Blog_project.payloads.ApiResponse;
 import com.example.Blog_project.payloads.PostDto;
+import com.example.Blog_project.payloads.PostResponse;
 import com.example.Blog_project.services.PostService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,13 +42,22 @@ public class PostController
         return new ResponseEntity<>(postDtos,HttpStatus.OK);
     }
 
+//    @GetMapping("posts")
+//    public ResponseEntity<List<PostDto>> getAllPosts
+//            (@RequestParam(value = "pageNumber",defaultValue = "0",required = false) Integer pageNumber,
+//             @RequestParam(value = "pageSize",defaultValue = "5",required = false)Integer pageSize)
+//    {
+//        List<PostDto> postDtoList = this.postService.getAllPosts(pageNumber,pageSize);
+//        return new ResponseEntity<>(postDtoList,HttpStatus.OK);
+//    }
+
     @GetMapping("posts")
-    public ResponseEntity<List<PostDto>> getAllPosts
+    public ResponseEntity<PostResponse> getAllPosts
             (@RequestParam(value = "pageNumber",defaultValue = "0",required = false) Integer pageNumber,
              @RequestParam(value = "pageSize",defaultValue = "5",required = false)Integer pageSize)
     {
-        List<PostDto> postDtoList = this.postService.getAllPosts(pageNumber,pageSize);
-        return new ResponseEntity<>(postDtoList,HttpStatus.OK);
+        PostResponse postResponse = this.postService.getAllPosts(pageNumber,pageSize);
+        return new ResponseEntity<>(postResponse,HttpStatus.OK);
     }
 
     @GetMapping("posts/{postId}")
